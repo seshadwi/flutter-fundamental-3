@@ -23,7 +23,7 @@ body: Center(
       ),
 ```
 
-file widget image.dart
+file widget `image.dart`.
 
 ```
 import 'package:flutter/material.dart';
