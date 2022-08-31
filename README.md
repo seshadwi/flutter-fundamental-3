@@ -2,13 +2,42 @@
 
 ## Praktikum 1 - Menerapkan Gesture Detector 
 
-This project is a starting point for a Flutter application.
+### Langkah 1 : Menambahkan GestureDetector
 
-A few resources to get you started if this is your first Flutter project:
+Buka file `main.dart` lalu ganti bagian `body` dengan kode berikut. Untuk `MyImageWidget()` dapat Anda ganti dengan widget sendiri.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
+body: Center(
+        child: GestureDetector(
+            onTap: _incrementCounter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const MyImageWidget(),
+                Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ],
+            )),
+      ),
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+file widget image.dart
+
+```
+import 'package:flutter/material.dart';
+
+class MyImageWidget extends StatelessWidget {
+  const MyImageWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Image(
+      image: AssetImage("logo_polinema.png"),
+    );
+  }
+}
+```
+
+
