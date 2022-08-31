@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fundamental_3/forms.dart';
 import 'package:flutter_fundamental_3/widgets/image.dart';
 
 void main() {
@@ -89,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '$_counter',
                 style: Theme.of(context).textTheme.headline4,
               ),
+              const FormContoh(),
             ],
           ),
         ),
