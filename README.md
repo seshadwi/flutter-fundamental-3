@@ -201,4 +201,157 @@ children: <Widget>[
  
  ![Screenshot](images/02.png)
  
+ ## Praktikum 3: Custom Input dan FormField Widget
  
+ ## Langkah 1: Buat class VerificationCodeInput
+ 
+ Buat file `input_fields.dart` lalu isi kode seperti berikut.
+ 
+ ```
+ class VerificationCodeInput extends StatefulWidget {
+  final BorderSide borderSide;
+  final void Function(String)? onChanged;
+  final TextEditingController? controller;
+
+  const VerificationCodeInput({
+    Key? key,
+    this.controller,
+    this.borderSide = const BorderSide(),
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  _VerificationCodeInputState createState() => _VerificationCodeInputState();
+}
+ ```
+ 
+ ## Langkah 2 : Buat class _VerificationCodeInputState
+ 
+ Kemudian dibawahnya buat `class _VerificationCodeInputState` yang di-extends dengan State.
+ 
+ ```
+ class _VerificationCodeInputState extends State<VerificationCodeInput> {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: widget.controller,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        LengthLimitingTextInputFormatter(6),
+      ],
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: widget.borderSide,
+        ),
+      ),
+      keyboardType: TextInputType.number,
+      onChanged: widget.onChanged,
+    );
+  }
+}
+```
+
+## Langkah 3 :  Buat class VerificationCodeFormField
+
+Masih di file `input_fields.dart`, buatlah `class VerificationCodeFormField` seperti berikut yang diletakkan dibawahnya.
+
+```
+/// FormField version of the VerificationCodeInput widget
+class VerificationCodeFormField extends FormField<String> {
+  final TextEditingController controller;
+
+  VerificationCodeFormField({
+    Key? key,
+    FormFieldSetter<String>? onSaved,
+    required this.controller,
+    FormFieldValidator<String>? validator,
+  }) : super(
+          key: key,
+          validator: validator,
+          builder: (FormFieldState<String> field) {
+            _VerificationCodeFormFieldState state = field as _VerificationCodeFormFieldState;
+            return VerificationCodeInput(
+              controller: state._controller,
+            );
+          },
+        );
+
+  @override
+  FormFieldState<String> createState() => _VerificationCodeFormFieldState();
+}
+```
+### Langkah 4: Buat class _VerificationCodeFormFieldState
+ 
+Selanjutnya buat class state-nya seperti berikut.
+
+```
+class _VerificationCodeFormFieldState extends FormFieldState<String> {
+  final TextEditingController _controller = TextEditingController(text: "");
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.addListener(_controllerChanged);
+  }
+
+  @override
+  void reset() {
+    super.reset();
+    _controller.text = "";
+  }
+
+  void _controllerChanged() {
+    didChange(_controller.text);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_controllerChanged);
+    super.dispose();
+  }
+}
+```
+
+### Langkah 5 : Tambah variabel _controller
+
+Buka file `main.dart` lalu tambahkan variabel `_controller` di dalam class extends State
+
+```
+final TextEditingController _controller = TextEditingController.fromValue(const TextEditingValue(text: "isi angka saja"));
+```
+
+### Langkah 6: Tambah Widget VerificationCodeFormField
+
+Lalu masuk ke method Widget build pada bagian `children:` tambahkan `Form` seperti kode berikut. Lakukan import dari file `input_fields.dart` untuk `VerificationCodeFormField`.
+
+```
+Form(
+     child: Column(
+     mainAxisSize: MainAxisSize.min,
+     children: <Widget>[
+              VerificationCodeFormField(controller: _controller),
+               Builder(
+                builder: (BuildContext subContext) => ElevatedButton(
+                  onPressed: () {
+                     final valid = Form.of(subContext)?.validate();
+                        if (kDebugMode) {
+                          print("valid: $valid");
+                        }
+                      },
+                  child: const Text("validate"),
+                ),
+              )
+           ],
+        ),
+),
+```
+
+Output program : 
+
+![Screenshot](images/03.png)
+
+
+
+
