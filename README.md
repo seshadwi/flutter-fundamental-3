@@ -39,5 +39,9 @@ class MyImageWidget extends StatelessWidget {
   }
 }
 ```
+Jika project dijalankan maka kode program pada `MyImageWidget()` disini menampilkan logo Polinema seperti gambar berikut. Jika klik/tap pada gambar, maka angka di bawah akan terus bertambah, dikarenakan pada **GestureDetector** terdapat parameter **ontap: _ incrementCounter** yang mengakses state **incrementCounter**.
 
+Output Program 
+
+![Screenshot](images/01.png)
 
