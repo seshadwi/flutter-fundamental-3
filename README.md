@@ -352,6 +352,7 @@ Output program :
 
 ![Screenshot](images/03.png)
 
+Hasilnya adalah, form hanya bisa diisi oleh angka, tidak dapat diisi oleh huruf dikarenakan terdapat filtering input field pada sintaks berikut. 
 
-
+`FilteringTextInputFormatter.allow(RegExp("[0-9]")),`
 
