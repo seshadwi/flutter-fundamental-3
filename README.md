@@ -1,8 +1,6 @@
-# flutter_fundamental_3
+# Flutter Fundamental Bagian 3
 
-A new Flutter project.
-
-## Getting Started
+## Praktikum 1 - Menerapkan Gesture Detector 
 
 This project is a starting point for a Flutter application.
 
